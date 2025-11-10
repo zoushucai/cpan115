@@ -1,0 +1,47 @@
+__pycache__/
+*.py[oc]
+build/
+dist/
+*.egg-info/
+wheels/
+
+# Environments
+.venv/
+.env
+.ruff_cache/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Archives
+*.zip
+*.rar
+*.tar.gz
+*.part
+
+# Logs & Data
+*.log
+*.json
+*.pdf
+
+# Test files
+test*/
+test*.py
+testpdf/
+
+# Downloads
+downloads*/
+drop/
+__pypackages__/
+
+# Specific files
+aa.py
+m.py
+t.py
+上传流程.md
+图吧工具箱2409安装程序.exe
+cpan123-0.1.12.tar.gz
+site
