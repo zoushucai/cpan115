@@ -19,13 +19,12 @@ class Pan115OpenAPI:
         self.log = log
         self.auth = Auth(envpath=envpath, verbose=verbose)
         self.user = User(self.auth)
-        userinfo = self.user.userinfo
-        assert userinfo is not None, "用户信息未能成功获取"
-        assert self.user.userinfo is not None, "用户信息模型未初始化"
 
-        self.uploader = Uploader(self.auth, userinfo)
-        self.downloader = Downloader(self.auth, userinfo)
-        self.file = File(self.auth, userinfo)
-        self.rb = Rb(self.auth, userinfo)
-        self.userinfo = userinfo
+        self.userinfo = self.user.userinfo
+        assert self.userinfo is not None, "用户未授权,请先完成授权流程"
+
+        self.uploader = Uploader(self.auth, self.userinfo)
+        self.downloader = Downloader(self.auth, self.userinfo)
+        self.file = File(self.auth, self.userinfo)
+        self.rb = Rb(self.auth, self.userinfo)
         log.info(f"已登录用户: {self.userinfo.username} (ID: {self.userinfo.userid}, IsVIP: {self.userinfo.isvip})")
