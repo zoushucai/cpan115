@@ -21,6 +21,7 @@ class Pan115OpenAPI:
         self.user = User(self.auth)
         userinfo = self.user.userinfo
         assert userinfo is not None, "用户信息未能成功获取"
+        assert self.user.userinfo is not None, "用户信息模型未初始化"
 
         self.uploader = Uploader(self.auth, userinfo)
         self.downloader = Downloader(self.auth, userinfo)
