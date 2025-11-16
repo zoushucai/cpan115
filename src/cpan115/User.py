@@ -29,7 +29,7 @@ class User:
         """
         self.auth = auth
         self._user_resp_cache = None
-        self.userinfo: UserInfoModel = self.fetch_user_info()
+        self.userinfo: UserInfoModel = self._fetch_user_info()
 
     def get_user_info(self) -> dict:
         """获取用户信息, 通过调用 GET /open/user/info 接口
@@ -45,7 +45,7 @@ class User:
         self._user_resp_cache = resp
         return resp
 
-    def fetch_user_info(self) -> UserInfoModel:
+    def _fetch_user_info(self) -> UserInfoModel:
         """获取并缓存用户信息
 
         Returns:
