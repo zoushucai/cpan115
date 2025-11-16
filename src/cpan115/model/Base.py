@@ -8,8 +8,8 @@ class UserInfoModel(BaseModel):
 
     model_config = ConfigDict(extra="ignore")  # ✅ 忽略所有未定义字段
 
-    username: str | None = None
-    userid: str | None = None
+    username: str
+    userid: str
     isvip: bool | None = None
     viptype: int | None = None
 
