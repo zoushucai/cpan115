@@ -1,19 +1,22 @@
 from pydantic import Field, validate_call
 
 from .Auth import Auth
+from .model.Base import UserInfoModel
 from .utils.Constants import API
 
 
 class Rb:
     """文件相关操作封装"""
 
-    def __init__(self, auth: Auth):
+    def __init__(self, auth: Auth, userinfo: UserInfoModel | None = None):
         """初始化
 
         Args:
             auth: 已授权的 Auth 实例
+            userinfo: 可选的用户信息模型
         """
         self.auth = auth
+        self.userinfo = userinfo
 
     @validate_call
     def lists(self, limit: int = Field(30, ge=1, le=200), offset: int = Field(0, ge=0)) -> dict:

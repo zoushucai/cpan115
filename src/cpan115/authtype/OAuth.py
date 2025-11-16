@@ -3,7 +3,7 @@ from urllib.parse import urlencode, urljoin
 
 import httpx
 
-from ..model.Base import AuthError
+from ..model.Base import AuthError, BaseResponse
 from ..utils.Constants import API, UA
 from ..utils.EnvConfig import EnvConfig  # 假设上面的类放在 config.py 中
 from ..utils.Logger import log, log_request, log_response
@@ -219,6 +219,13 @@ class OAuth:
         else:
             # 一定要注意用data还是json
             respjson = self._do_request("POST", API.Oauth2.REFRESH, data={"refresh_token": self.refresh_token}).json()
+
+        try:
+            BaseResponse.model_validate(respjson)  # 验证响应状态
+        except Exception as e:
+            log.error(f"响应内容: {respjson}, 错误: {e}")
+            raise AuthError(-1, "刷新 token 失败") from e
+
         self._update_token(respjson)
         return self.access_token
 

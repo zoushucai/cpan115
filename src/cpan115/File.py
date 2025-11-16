@@ -3,6 +3,7 @@ from typing import Any, Literal
 from pydantic import validate_call
 
 from .Auth import Auth
+from .model.Base import UserInfoModel
 from .model.model import FileSearchParams, FilesListParams
 from .utils.Constants import API
 
@@ -12,13 +13,15 @@ SortField = Literal["file_name", "file_size", "user_utime", "file_type"]
 class File:
     """文件相关操作封装"""
 
-    def __init__(self, auth: Auth):
+    def __init__(self, auth: Auth, userinfo: UserInfoModel | None = None):
         """初始化
 
         Args:
             auth: 已授权的 Auth 实例
+            userinfo: 可选的用户信息模型
         """
         self.auth = auth
+        self.userinfo = userinfo
 
     @validate_call
     def add(self, pid: int | str, file_name: str) -> dict:

@@ -19,7 +19,12 @@ class Pan115OpenAPI:
         self.log = log
         self.auth = Auth(envpath=envpath, verbose=verbose)
         self.user = User(self.auth)
-        self.uploader = Uploader(self.auth)
-        self.downloader = Downloader(self.auth)
-        self.file = File(self.auth)
-        self.rb = Rb(self.auth)
+        userinfo = self.user.userinfo
+        assert userinfo is not None, "用户信息未能成功获取"
+
+        self.uploader = Uploader(self.auth, userinfo)
+        self.downloader = Downloader(self.auth, userinfo)
+        self.file = File(self.auth, userinfo)
+        self.rb = Rb(self.auth, userinfo)
+        self.userinfo = userinfo
+        log.info(f"已登录用户: {self.userinfo.username} (ID: {self.userinfo.userid}, IsVIP: {self.userinfo.isvip})")

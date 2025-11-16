@@ -9,12 +9,14 @@ from tqdm import tqdm
 
 from .Auth import Auth, log
 from .File import File
+from .model.Base import UserInfoModel
 
 
 class Downloader:
-    def __init__(self, auth: Auth):
+    def __init__(self, auth: Auth, userinfo: UserInfoModel | None = None):
         self.auth = auth
-        self.file = File(auth)
+        self.file = File(auth, userinfo)
+        self.userinfo = userinfo
         self._HEADERS = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
             "Accept": "*/*",

@@ -12,6 +12,7 @@ from tqdm import tqdm
 
 from .Auth import Auth
 from .File import File
+from .model.Base import UserInfoModel
 from .model.model import FileUploadParams
 from .utils.Constants import API
 from .utils.sha import calc_sha1, calc_sha1_range, calc_sign_val
@@ -20,7 +21,7 @@ from .utils.sha import calc_sha1, calc_sha1_range, calc_sign_val
 class Uploader:
     """文件上传操作封装"""
 
-    def __init__(self, auth: Auth):
+    def __init__(self, auth: Auth, userinfo: UserInfoModel | None = None):
         """初始化
 
         Args:
@@ -28,7 +29,8 @@ class Uploader:
         """
 
         self.auth = auth
-        self.file = File(auth)
+        self.userinfo = userinfo
+        self.file = File(auth, userinfo)
         self._counter = 0
         self._counter_lock = Lock()  # 保护 counter 的线程锁
 
