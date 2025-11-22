@@ -1,8 +1,8 @@
-import sys
-from typing import Literal, Optional
-
 from httpx import Request, Response
-from loguru import logger
+from loguru import logger as log
+
+# import sys
+# from typing import Literal, Optional
 
 
 def log_request(request: Request):
@@ -29,82 +29,82 @@ def log_response(response: Response):
     pass
 
 
-class SimpleLogger:
-    """
-    通用日志封装（Loguru 简易封装版）。
-    支持全局单例、控制台开关、日志文件。
-    """
+# class SimpleLogger:
+#     """
+#     通用日志封装（Loguru 简易封装版）。
+#     支持全局单例、控制台开关、日志文件。
+#     """
 
-    _global_instance: Optional["SimpleLogger"] = None
-    _configured = False
+#     _global_instance: Optional["SimpleLogger"] = None
+#     _configured = False
 
-    def __init__(
-        self,
-        *,
-        verbose: bool = False,
-        log_file: Optional[str] = None,
-        level: Literal["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"] = "INFO",
-    ):
-        self.verbose = verbose
-        self.log_file = log_file
-        self.level = level.upper()
-        self._configure_logger()
+#     def __init__(
+#         self,
+#         *,
+#         verbose: bool = False,
+#         log_file: Optional[str] = None,
+#         level: Literal["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"] = "INFO",
+#     ):
+#         self.verbose = verbose
+#         self.log_file = log_file
+#         self.level = level.upper()
+#         self._configure_logger()
 
-    def _configure_logger(self):
-        """配置 loguru sink（只执行一次）"""
-        if not SimpleLogger._configured:
-            logger.remove()
-            SimpleLogger._configured = True
+#     def _configure_logger(self):
+#         """配置 loguru sink（只执行一次）"""
+#         if not SimpleLogger._configured:
+#             logger.remove()
+#             SimpleLogger._configured = True
 
-            # 是否打印到控制台
-            if self.verbose:
-                logger.add(
-                    sys.stderr,
-                    level=self.level,
-                    enqueue=True,
-                    colorize=True,
-                    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | {message}",
-                )
+#             # 是否打印到控制台
+#             if self.verbose:
+#                 logger.add(
+#                     sys.stderr,
+#                     level=self.level,
+#                     enqueue=True,
+#                     colorize=True,
+#                     format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | {message}",
+#                 )
 
-            # 文件输出
-            if self.log_file:
-                logger.add(
-                    self.log_file,
-                    rotation="10 MB",
-                    enqueue=True,
-                    level=self.level,
-                    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}",
-                )
+#             # 文件输出
+#             if self.log_file:
+#                 logger.add(
+#                     self.log_file,
+#                     rotation="10 MB",
+#                     enqueue=True,
+#                     level=self.level,
+#                     format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}",
+#                 )
 
-    # ---- 全局单例 ----
-    @classmethod
-    def global_logger(
-        cls,
-        *,
-        verbose: bool = False,
-        log_file: Optional[str] = None,
-        level: Literal["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"] = "INFO",
-    ) -> "SimpleLogger":
-        """返回全局单例日志对象，可指定是否打印"""
-        if cls._global_instance is None:
-            cls._global_instance = cls(verbose=verbose, log_file=log_file, level=level)
-        return cls._global_instance
+#     # ---- 全局单例 ----
+#     @classmethod
+#     def global_logger(
+#         cls,
+#         *,
+#         verbose: bool = False,
+#         log_file: Optional[str] = None,
+#         level: Literal["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"] = "INFO",
+#     ) -> "SimpleLogger":
+#         """返回全局单例日志对象，可指定是否打印"""
+#         if cls._global_instance is None:
+#             cls._global_instance = cls(verbose=verbose, log_file=log_file, level=level)
+#         return cls._global_instance
 
-    # ---- 日志方法 ----
-    def debug(self, msg: str):
-        logger.debug(msg)
+#     # ---- 日志方法 ----
+#     def debug(self, msg: str):
+#         logger.debug(msg)
 
-    def info(self, msg: str):
-        logger.info(msg)
+#     def info(self, msg: str):
+#         logger.info(msg)
 
-    def success(self, msg: str):
-        logger.success(msg)
+#     def success(self, msg: str):
+#         logger.success(msg)
 
-    def warning(self, msg: str):
-        logger.warning(msg)
+#     def warning(self, msg: str):
+#         logger.warning(msg)
 
-    def error(self, msg: str):
-        logger.error(msg)
+#     def error(self, msg: str):
+#         logger.error(msg)
 
 
-log = SimpleLogger.global_logger(verbose=True)
+# log = SimpleLogger.global_logger(verbose=True)
